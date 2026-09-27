@@ -1,0 +1,15 @@
+@page "/lien-he"
+@model ContactModel
+@{ ViewData["Title"] = "Liên hệ"; }
+
+<div class="page-hero"><div class="container"><span class="eyebrow">HỖ TRỢ KHÁCH HÀNG</span><h1>Liên hệ @Model.Settings.ShopName</h1><p>Chúng tôi sẵn sàng hỗ trợ chọn sản phẩm, kích thước và kiểm tra tồn kho.</p></div></div>
+<div class="container section-block"><div class="row g-4">
+    <div class="col-lg-7"><div class="content-panel"><h2>Thông tin cửa hàng</h2><div class="contact-list">
+        @if (!string.IsNullOrWhiteSpace(Model.Settings.PhoneNumber)) { <div><b>Số điện thoại</b><a href="tel:@Model.Settings.PhoneNumber">@Model.Settings.PhoneNumber</a></div> }
+        @if (UrlSafety.IsSafeHttpUrl(Model.Settings.FacebookUrl) && !string.IsNullOrWhiteSpace(Model.Settings.FacebookUrl)) { <div><b>Facebook</b><a href="@Model.Settings.FacebookUrl" target="_blank" rel="noopener noreferrer">Mở Facebook</a></div> }
+        @if (!string.IsNullOrWhiteSpace(Model.Settings.Email)) { <div><b>Email</b><a href="mailto:@Model.Settings.Email">@Model.Settings.Email</a></div> }
+        @if (!string.IsNullOrWhiteSpace(Model.Settings.Address)) { <div><b>Địa chỉ</b><span>@Model.Settings.Address</span></div> }
+        @if (!string.IsNullOrWhiteSpace(Model.Settings.SupportHours)) { <div><b>Giờ hỗ trợ</b><span>@Model.Settings.SupportHours</span></div> }
+    </div>@if (string.IsNullOrWhiteSpace(Model.Settings.PhoneNumber) && string.IsNullOrWhiteSpace(Model.Settings.FacebookUrl) && string.IsNullOrWhiteSpace(Model.Settings.Email) && string.IsNullOrWhiteSpace(Model.Settings.Address)) { <div class="alert alert-secondary mt-4">Thông tin liên hệ đang được cập nhật. Quản trị viên có thể cấu hình trong trang quản trị.</div> }</div></div>
+    <div class="col-lg-5"><div class="racing-info-card"><span class="number">K</span><h2>Cách nhận hỗ trợ nhanh</h2><ol><li>Gửi tên sản phẩm bạn quan tâm.</li><li>Cho biết mẫu hoặc màu bạn muốn xem.</li><li>Hỏi thêm thông số nếu cần.</li><li>Nhận tư vấn trực tiếp từ cửa hàng.</li></ol></div></div>
+</div></div>

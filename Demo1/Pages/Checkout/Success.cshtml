@@ -1,0 +1,5 @@
+@page "/dat-hang/thanh-cong"
+@model Demo1.Pages.Checkout.SuccessModel
+@{ ViewData["Title"] = "Đặt hàng thành công"; }
+
+<div class="container section-block"><div class="success-panel"><div class="success-icon">✓</div><span class="eyebrow text-danger">ĐẶT HÀNG THÀNH CÔNG</span><h1>Cảm ơn bạn đã chọn Khada Moto Shop</h1><p>Mã đơn hàng của bạn:</p><div class="order-code">@Model.CompletedOrderCode</div><p>Hãy lưu mã đơn và số điện thoại để tra cứu trạng thái.</p><div class="d-flex flex-wrap justify-content-center gap-2"><a class="btn btn-racing" asp-page="/OrderTracking/Details" asp-route-orderCode="@Model.CompletedOrderCode" asp-route-phoneNumber="@Model.CompletedPhoneNumber">Xem đơn hàng</a><a class="btn btn-outline-dark" asp-page="/Products/Index">Tiếp tục mua hàng</a></div></div></div>

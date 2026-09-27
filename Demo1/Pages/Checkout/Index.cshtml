@@ -1,0 +1,16 @@
+@page "/dat-hang"
+@model Demo1.Pages.Checkout.IndexModel
+@{ ViewData["Title"] = "Đặt hàng"; }
+
+<div class="page-hero compact"><div class="container"><h1>Đặt hàng thanh toán khi nhận</h1><p>Khada Moto Shop hỗ trợ thanh toán COD khi nhận hàng.</p></div></div>
+<div class="container section-block"><form method="post" data-submit-loading><div class="row g-4">
+    <div class="col-lg-7"><div class="content-panel"><h2>Thông tin nhận hàng</h2><div asp-validation-summary="ModelOnly" class="alert alert-danger"></div><div class="row g-3">
+        <div class="col-md-6"><label asp-for="Input.CustomerName" class="form-label"></label><input asp-for="Input.CustomerName" class="form-control" /><span asp-validation-for="Input.CustomerName" class="text-danger"></span></div>
+        <div class="col-md-6"><label asp-for="Input.PhoneNumber" class="form-label"></label><input asp-for="Input.PhoneNumber" class="form-control" /><span asp-validation-for="Input.PhoneNumber" class="text-danger"></span></div>
+        <div class="col-12"><label asp-for="Input.Email" class="form-label"></label><input asp-for="Input.Email" class="form-control" /><span asp-validation-for="Input.Email" class="text-danger"></span></div>
+        <div class="col-12"><label asp-for="Input.Address" class="form-label"></label><textarea asp-for="Input.Address" class="form-control" rows="3"></textarea><span asp-validation-for="Input.Address" class="text-danger"></span></div>
+        <div class="col-12"><label asp-for="Input.Note" class="form-label"></label><textarea asp-for="Input.Note" class="form-control" rows="3"></textarea><span asp-validation-for="Input.Note" class="text-danger"></span></div>
+    </div></div></div>
+    <div class="col-lg-5"><aside class="order-summary"><h2>Đơn hàng</h2>@foreach (var item in Model.Cart.Items) { <div><span>@item.ProductName × @item.Quantity<br /><small>@item.Size · @item.Color</small></span><b>@item.LineTotal.ToVnd()</b></div> }<div><span>Tạm tính</span><b>@Model.Cart.Subtotal.ToVnd()</b></div><div><span>Phí giao hàng</span><b>@(Model.ShippingFee == 0 ? "Miễn phí" : Model.ShippingFee.ToVnd())</b></div><div class="total"><span>Tổng thanh toán</span><b>@((Model.Cart.Subtotal + Model.ShippingFee).ToVnd())</b></div><div class="cod-note">Thanh toán bằng tiền mặt khi nhận hàng. Không nhập thông tin thẻ.</div><button class="btn btn-racing btn-lg w-100 mt-3" type="submit" data-submit-button>Xác nhận đặt hàng</button></aside></div>
+</div></form></div>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

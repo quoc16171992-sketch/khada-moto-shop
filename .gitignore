@@ -1,0 +1,12 @@
+**/bin/
+**/obj/
+.vs/
+work/
+*.user
+Demo1/khadashop.db
+Demo1/khadashop.db-shm
+Demo1/khadashop.db-wal
+Demo1/wwwroot/uploads/banners/*
+Demo1/wwwroot/uploads/products/*
+!Demo1/wwwroot/uploads/banners/.gitkeep
+!Demo1/wwwroot/uploads/products/.gitkeep

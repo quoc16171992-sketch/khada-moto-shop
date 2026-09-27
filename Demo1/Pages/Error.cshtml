@@ -1,0 +1,6 @@
+﻿@page
+@model ErrorModel
+@{
+    ViewData["Title"] = Model.HttpStatusCode == 404 ? "Không tìm thấy trang" : "Đã có lỗi xảy ra";
+}
+<div class="container section-block"><div class="empty-state"><span class="eyebrow text-danger">@(Model.HttpStatusCode == 404 ? "404" : "KHADA MOTO SHOP")</span><h1>@(Model.HttpStatusCode == 404 ? "Không tìm thấy trang" : "Đã có lỗi xảy ra")</h1><p>@(Model.HttpStatusCode == 404 ? "Trang bạn tìm kiếm không tồn tại hoặc đã được chuyển." : "Vui lòng thử lại sau. Hệ thống không hiển thị chi tiết lỗi để bảo vệ dữ liệu của bạn.")</p><a class="btn btn-racing" asp-page="/Index">Về trang chủ</a>@if (Model.ShowRequestId) { <p class="mt-4 text-muted"><small>Mã tham chiếu: @Model.RequestId</small></p> }</div></div>

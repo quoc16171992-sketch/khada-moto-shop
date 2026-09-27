@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+@inject ISiteSettingsService SiteSettingsService
+@{
+    var siteSettings = await SiteSettingsService.GetAsync();
+    var pageTitle = ViewData["Title"] as string;
+}
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@siteSettings.ShopName - Đồ bảo hộ và đồ chơi xe@(string.IsNullOrWhiteSpace(pageTitle) ? "" : $" | {pageTitle}")</title>
+    <meta name="description" content="@siteSettings.FooterDescription" />
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Demo1.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        @if (!string.IsNullOrWhiteSpace(siteSettings.PhoneNumber) || !string.IsNullOrWhiteSpace(siteSettings.SupportHours))
+        {
+            <div class="top-contact-bar"><div class="container d-flex flex-wrap justify-content-between gap-2"><span>Hỗ trợ: @siteSettings.SupportHours</span>@if (!string.IsNullOrWhiteSpace(siteSettings.PhoneNumber)) { <a href="tel:@siteSettings.PhoneNumber">Gọi ngay: @siteSettings.PhoneNumber</a> }</div></div>
+        }
+        <nav class="navbar navbar-expand-lg navbar-dark racing-navbar sticky-top">
+            <div class="container">
+                <a class="navbar-brand brand-logo" asp-page="/Index" aria-label="@siteSettings.ShopName">
+                    <img class="brand-logo-image" src="~/images/khada-moto-shop-logo.jpg" asp-append-version="true" alt="Khada Moto Shop" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse justify-content-end">
+                    <ul class="navbar-nav align-items-lg-center gap-lg-1">
+                        <li class="nav-item"><a class="nav-link" asp-page="/Index">Trang chủ</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-page="/Products/Index">Sản phẩm</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-page="/Contact">Liên hệ</a></li>
+                        @if (User.IsInRole("Admin")) { <li class="nav-item"><a class="nav-link text-warning" asp-page="/Admin/Index">Quản trị</a></li> }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div>
+        <main role="main">
+            @if (TempData["SuccessMessage"] is string successMessage) { <div class="container mt-3"><div class="alert alert-success alert-dismissible fade show" role="alert">@successMessage<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div></div> }
+            @if (TempData["ErrorMessage"] is string errorMessage) { <div class="container mt-3"><div class="alert alert-danger alert-dismissible fade show" role="alert">@errorMessage<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div></div> }
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="site-footer">
+        <div class="container py-5">
+            <div class="row g-4">
+                <div class="col-lg-5"><a class="brand-logo footer-logo" asp-page="/Index" aria-label="@siteSettings.ShopName"><img class="brand-logo-image" src="~/images/khada-moto-shop-logo.jpg" asp-append-version="true" alt="Khada Moto Shop" /></a><p class="mt-3 mb-0">@siteSettings.FooterDescription</p></div>
+                <div class="col-6 col-lg-3"><h2 class="footer-title">Liên kết</h2><a asp-page="/Index">Trang chủ</a><a asp-page="/Products/Index">Sản phẩm</a><a asp-page="/Contact">Liên hệ</a></div>
+                <div class="col-6 col-lg-4"><h2 class="footer-title">Thông tin cửa hàng</h2>@if (!string.IsNullOrWhiteSpace(siteSettings.PhoneNumber)) { <a href="tel:@siteSettings.PhoneNumber">@siteSettings.PhoneNumber</a> } @if (!string.IsNullOrWhiteSpace(siteSettings.Email)) { <a href="mailto:@siteSettings.Email">@siteSettings.Email</a> } @if (!string.IsNullOrWhiteSpace(siteSettings.Address)) { <span>@siteSettings.Address</span> } @if (UrlSafety.IsSafeHttpUrl(siteSettings.FacebookUrl) && !string.IsNullOrWhiteSpace(siteSettings.FacebookUrl)) { <a href="@siteSettings.FacebookUrl" target="_blank" rel="noopener noreferrer">Facebook</a> }</div>
+            </div>
+            <div class="footer-bottom mt-4 pt-3">© @DateTime.Now.Year @siteSettings.ShopName. Bảo lưu mọi quyền.</div>
+        </div>
+    </footer>
+    <partial name="_ContactFloatingButtons" model="siteSettings" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

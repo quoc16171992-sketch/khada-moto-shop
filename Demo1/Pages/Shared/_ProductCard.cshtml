@@ -1,0 +1,18 @@
+@model Product
+@{
+    var hasStock = Model.Variants.Any(x => x.IsActive && x.StockQuantity > 0);
+    var hasDiscount = Model.CompareAtPrice.HasValue && Model.CompareAtPrice > Model.BasePrice;
+    var discount = hasDiscount ? (int)Math.Round((1 - Model.BasePrice / Model.CompareAtPrice!.Value) * 100) : 0;
+}
+<article class="product-card h-100">
+    <div class="product-image-wrap">
+        <a asp-page="/Products/Details" asp-route-slug="@Model.Slug" aria-label="Xem @Model.Name"><img src="@(string.IsNullOrWhiteSpace(Model.ImagePath) ? "/images/placeholder-product.svg" : Model.ImagePath)" alt="@Model.Name" loading="lazy" /></a>
+        <div class="product-badges">@if (Model.IsFeatured) { <span class="badge bg-danger">Nổi bật</span> } @if (hasDiscount) { <span class="badge bg-warning text-dark">-@discount%</span> }</div>
+    </div>
+    <div class="product-card-body">
+        <span class="product-category">@Model.Category?.Name</span>
+        <h3><a asp-page="/Products/Details" asp-route-slug="@Model.Slug">@Model.Name</a></h3>
+        <div class="price-row"><strong>@Model.BasePrice.ToVnd()</strong>@if (hasDiscount) { <del>@Model.CompareAtPrice!.Value.ToVnd()</del> }</div>
+        <div class="d-flex align-items-center justify-content-between mt-auto pt-3"><span class="stock-status @(hasStock ? "in-stock" : "out-stock")">@(hasStock ? "Còn hàng" : "Hết hàng")</span><a class="btn btn-outline-dark btn-sm" asp-page="/Products/Details" asp-route-slug="@Model.Slug">Xem chi tiết</a></div>
+    </div>
+</article>

@@ -1,0 +1,15 @@
+@model SiteSettings
+
+@if (!string.IsNullOrWhiteSpace(Model.PhoneNumber) || (UrlSafety.IsSafeHttpUrl(Model.FacebookUrl) && !string.IsNullOrWhiteSpace(Model.FacebookUrl)))
+{
+    <div class="floating-contact" aria-label="Liên hệ nhanh">
+        @if (!string.IsNullOrWhiteSpace(Model.PhoneNumber))
+        {
+            <a class="floating-btn floating-phone" href="tel:@Model.PhoneNumber" title="Gọi @Model.ShopName" aria-label="Gọi điện cho @Model.ShopName">☎</a>
+        }
+        @if (UrlSafety.IsSafeHttpUrl(Model.FacebookUrl) && !string.IsNullOrWhiteSpace(Model.FacebookUrl))
+        {
+            <a class="floating-btn floating-facebook" href="@Model.FacebookUrl" target="_blank" rel="noopener noreferrer" title="Facebook @Model.ShopName" aria-label="Mở Facebook của @Model.ShopName">f</a>
+        }
+    </div>
+}

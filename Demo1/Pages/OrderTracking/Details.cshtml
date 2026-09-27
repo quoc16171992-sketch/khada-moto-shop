@@ -1,0 +1,13 @@
+@page "/tra-cuu-don-hang/chi-tiet"
+@model Demo1.Pages.OrderTracking.DetailsModel
+@{ ViewData["Title"] = "Chi tiết đơn hàng"; }
+
+<div class="container section-block">
+    @if (Model.Order is null)
+    { <div class="empty-state"><h1>Không tìm thấy đơn hàng phù hợp.</h1><a class="btn btn-dark" asp-page="/OrderTracking/Index">Tra cứu lại</a></div> }
+    else
+    {
+        <div class="order-detail-header"><div><span class="eyebrow text-danger">ĐƠN HÀNG</span><h1>@Model.Order.OrderCode</h1><p>Đặt lúc @Model.Order.CreatedAtUtc.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</p></div><span class="status-pill status-@Model.Order.Status.ToString().ToLowerInvariant()">@Model.Order.Status.ToVietnamese()</span></div>
+        <div class="row g-4"><div class="col-lg-8"><div class="content-panel"><h2>Sản phẩm</h2><div class="order-items">@foreach (var item in Model.Order.Items) { <div><span><b>@item.ProductName</b><small>SKU @item.Sku · @item.Size · @item.Color · SL @item.Quantity</small></span><span>@item.UnitPrice.ToVnd()<small>@item.LineTotal.ToVnd()</small></span></div> }</div></div></div><div class="col-lg-4"><aside class="order-summary"><h2>Thanh toán COD</h2><div><span>Tạm tính</span><b>@Model.Order.Subtotal.ToVnd()</b></div><div><span>Phí giao hàng</span><b>@Model.Order.ShippingFee.ToVnd()</b></div><div class="total"><span>Tổng cộng</span><b>@Model.Order.TotalAmount.ToVnd()</b></div><hr /><b>Địa chỉ giao hàng</b><p>@Model.Order.Address</p></aside></div></div>
+    }
+</div>

@@ -1,0 +1,56 @@
+@page "/san-pham/{slug}"
+@model Demo1.Pages.Products.DetailsModel
+@{
+    ViewData["Title"] = Model.Detail.Product.Name;
+    var product = Model.Detail.Product;
+    var hasDiscount = product.CompareAtPrice > product.BasePrice;
+    var galleryImages = new List<string>();
+    if (!string.IsNullOrWhiteSpace(product.ImagePath)) galleryImages.Add(product.ImagePath);
+    if (!string.IsNullOrWhiteSpace(product.SecondaryImagePath)) galleryImages.Add(product.SecondaryImagePath);
+    galleryImages.AddRange(product.GalleryImages.OrderBy(x => x.DisplayOrder).Select(x => x.ImagePath).Where(x => !string.IsNullOrWhiteSpace(x)));
+    galleryImages = galleryImages.Distinct(StringComparer.OrdinalIgnoreCase).ToList();
+    if (galleryImages.Count == 0) galleryImages.Add("/images/placeholder-product.svg");
+    var primaryImage = galleryImages[0];
+}
+
+<div class="container section-block product-detail-page">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a asp-page="/Index">Trang chủ</a></li><li class="breadcrumb-item"><a asp-page="/Products/Index">Sản phẩm</a></li><li class="breadcrumb-item active">@product.Name</li></ol></nav>
+    <div class="row g-3 g-lg-5">
+        <div class="col-lg-6">
+            <div class="product-gallery" data-product-gallery>
+                <div class="detail-image"><img src="@primaryImage" alt="@product.Name" data-gallery-main /></div>
+                @if (galleryImages.Count > 1)
+                {
+                    <div class="product-gallery-thumbs" aria-label="Ảnh sản phẩm">
+                        @for (var imageIndex = 0; imageIndex < galleryImages.Count; imageIndex++)
+                        {
+                            var imagePath = galleryImages[imageIndex];
+                            var imageNumber = imageIndex + 1;
+                            <button type="button" class="product-gallery-thumb @(imageIndex == 0 ? "active" : "")" data-gallery-src="@imagePath" data-gallery-alt="@product.Name - ảnh @imageNumber" aria-label="Xem ảnh @imageNumber"><img src="@imagePath" alt="" /></button>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <span class="product-category">@product.Category.Name</span><h1>@product.Name</h1>
+            <div class="detail-price"><strong>@product.BasePrice.ToVnd()</strong>@if (hasDiscount) { <del>@product.CompareAtPrice!.Value.ToVnd()</del><span>-@((int)Math.Round((1 - product.BasePrice / product.CompareAtPrice.Value) * 100))%</span> }</div>
+            <p class="lead">@product.ShortDescription</p>
+            @if (Model.Detail.Variants.Count > 0)
+            {
+            <div class="variant-form">
+                <label class="form-label fw-bold">Phiên bản sản phẩm</label>
+                <div class="variant-grid">
+                    @foreach (var variant in Model.Detail.Variants)
+                    {
+                        <div class="variant-option catalog-variant"><span><b>@variant.Size · @variant.Color</b><small>Mã sản phẩm: @variant.Sku</small></span></div>
+                    }
+                </div>
+            </div>
+            }
+            <div class="quick-contact mt-4"><span>✓ Catalogue tham khảo</span><span>✓ Hỗ trợ tư vấn sản phẩm</span><a asp-page="/Contact">Liên hệ cửa hàng</a>@if (!string.IsNullOrWhiteSpace(Model.Settings.PhoneNumber)) { <a href="tel:@Model.Settings.PhoneNumber">☎ Gọi tư vấn</a> }@if (UrlSafety.IsSafeHttpUrl(Model.Settings.FacebookUrl) && !string.IsNullOrWhiteSpace(Model.Settings.FacebookUrl)) { <a href="@Model.Settings.FacebookUrl" target="_blank" rel="noopener noreferrer">f Facebook</a> }</div>
+        </div>
+    </div>
+    <div class="product-description content-panel mt-5"><h2>Mô tả sản phẩm</h2><p>@product.Description</p></div>
+    @if (Model.Detail.RelatedProducts.Count > 0) { <div class="mt-5"><div class="section-heading"><h2>Sản phẩm liên quan</h2></div><div class="row g-4">@foreach (var related in Model.Detail.RelatedProducts) { <div class="col-6 col-lg-3"><partial name="_ProductCard" model="related" /></div> }</div></div> }
+</div>

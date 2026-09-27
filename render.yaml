@@ -1,0 +1,16 @@
+# Render Blueprint - KhadaShop
+# Deploy: https://dashboard.render.com -> New + -> Blueprint -> chon repo GitHub nay
+services:
+  - type: web
+    name: khadashop
+    runtime: docker
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      # Thay email + mat khau Admin that truoc khi deploy (Render -> Environment)
+      - key: AdminSeed__Email
+        sync: false
+      - key: AdminSeed__Password
+        sync: false

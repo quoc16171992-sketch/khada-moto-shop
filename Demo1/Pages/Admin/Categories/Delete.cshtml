@@ -1,0 +1,4 @@
+@page "{id:int}"
+@model Demo1.Pages.Admin.Categories.DeleteModel
+@{ ViewData["Title"] = "Xóa danh mục"; }
+<div class="container section-block admin-page"><partial name="_AdminNav" /><div class="delete-panel"><h1>Xóa danh mục?</h1><p>Danh mục <b>@Model.Category.Name</b> hiện có @Model.ProductCount sản phẩm.</p>@if (Model.ProductCount > 0) { <div class="alert alert-warning">Không thể xóa khi danh mục còn sản phẩm. Bạn có thể sửa và tắt danh mục.</div><a class="btn btn-outline-secondary" asp-page="Index">Quay lại</a> } else { <form method="post"><button class="btn btn-danger" type="submit">Xác nhận xóa</button> <a class="btn btn-outline-secondary" asp-page="Index">Hủy</a></form> }</div></div>

@@ -1,0 +1,29 @@
+﻿@page
+@model IndexModel
+@{ ViewData["Title"] = "Trang chủ"; }
+
+<partial name="_BannerCarousel" model="Model.Home.Banners" />
+
+<section class="section-block category-strip"><div class="container">
+    <div class="section-heading"><div><span class="eyebrow text-danger">DANH MỤC</span><h2>Chọn phong cách của bạn</h2></div><a asp-page="/Products/Index">Xem tất cả →</a></div>
+    <div class="row g-3">@foreach (var category in Model.Home.Categories) { <div class="col-md-4"><a class="category-card" asp-page="/Products/Index" asp-route-category="@category.Slug"><span class="category-mark">K</span><div><h3>@category.Name</h3><p>@category.Description</p></div><span>→</span></a></div> }</div>
+</div></section>
+
+<section class="section-block bg-light-subtle"><div class="container">
+    <div class="section-heading"><div><span class="eyebrow text-danger">ĐƯỢC YÊU THÍCH</span><h2>Sản phẩm nổi bật</h2></div></div>
+    <div class="row g-4">@foreach (var product in Model.Home.FeaturedProducts) { <div class="col-6 col-lg-3"><partial name="_ProductCard" model="product" /></div> }</div>
+</div></section>
+
+<section class="commitment-section"><div class="container"><div class="row g-3">
+    <div class="col-6 col-lg-3"><div class="commitment-card"><b>01</b><h3>Hình ảnh rõ nét</h3><p>Xem sản phẩm từ nhiều góc.</p></div></div>
+    <div class="col-6 col-lg-3"><div class="commitment-card"><b>02</b><h3>Thông tin rõ ràng</h3><p>Mẫu, màu sắc và thông số chi tiết.</p></div></div>
+    <div class="col-6 col-lg-3"><div class="commitment-card"><b>03</b><h3>Hỗ trợ chọn mẫu</h3><p>Tư vấn sản phẩm phù hợp.</p></div></div>
+    <div class="col-6 col-lg-3"><div class="commitment-card"><b>04</b><h3>Tư vấn tận tâm</h3><p>Qua điện thoại hoặc Facebook.</p></div></div>
+</div></div></section>
+
+<section class="section-block"><div class="container">
+    <div class="section-heading"><div><span class="eyebrow text-danger">VỪA CẬP NHẬT</span><h2>Sản phẩm mới</h2></div></div>
+    <div class="row g-4">@foreach (var product in Model.Home.NewProducts) { <div class="col-6 col-lg-3"><partial name="_ProductCard" model="product" /></div> }</div>
+</div></section>
+
+<section class="home-contact-cta"><div class="container"><div><span class="eyebrow">KHADA MOTO SHOP SUPPORT</span><h2>Cần tư vấn chọn đồ?</h2><p>Liên hệ với chúng tôi để được hỗ trợ về mẫu, màu sắc và tồn kho.</p></div><a class="btn btn-light btn-lg" asp-page="/Contact">Liên hệ ngay</a></div></section>

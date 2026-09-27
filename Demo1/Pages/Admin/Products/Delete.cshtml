@@ -1,0 +1,4 @@
+@page "{id:int}"
+@model Demo1.Pages.Admin.Products.DeleteModel
+@{ ViewData["Title"] = "Xóa sản phẩm"; }
+<div class="container section-block admin-page"><partial name="_AdminNav" /><div class="delete-panel"><h1>@(Model.HasOrders ? "Tắt sản phẩm?" : "Xóa sản phẩm?")</h1><p>Sản phẩm: <b>@Model.Product.Name</b></p>@if (Model.HasOrders) { <div class="alert alert-warning">Sản phẩm đã xuất hiện trong đơn hàng nên hệ thống sẽ chỉ đặt trạng thái ngừng bán, không xóa dữ liệu.</div> }<form method="post"><button class="btn @(Model.HasOrders ? "btn-warning" : "btn-danger")" type="submit">@(Model.HasOrders ? "Xác nhận tắt" : "Xác nhận xóa")</button> <a class="btn btn-outline-secondary" asp-page="Index">Hủy</a></form></div></div>

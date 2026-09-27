@@ -1,0 +1,5 @@
+@page
+@model Demo1.Pages.Admin.Products.CreateModel
+@{ ViewData["Title"] = "Thêm sản phẩm"; }
+<div class="container section-block admin-page"><partial name="_AdminNav" /><h1>Thêm sản phẩm</h1><form method="post" enctype="multipart/form-data" class="content-panel mt-4"><div asp-validation-summary="ModelOnly" class="alert alert-danger"></div><partial name="_ProductAdminFields" model="Model" /><div class="mt-4"><button class="btn btn-racing" type="submit">Thêm và quản lý biến thể</button> <a class="btn btn-outline-secondary" asp-page="Index">Hủy</a></div></form></div>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

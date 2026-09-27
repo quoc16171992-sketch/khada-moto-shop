@@ -1,0 +1,4 @@
+@page
+@model Demo1.Pages.Admin.IndexModel
+@{ ViewData["Title"] = "Quản trị Khada Moto Shop"; }
+<div class="container section-block admin-page"><partial name="_AdminNav" /><div class="section-heading"><div><span class="eyebrow text-danger">KHADA MOTO SHOP ADMIN</span><h1>Tổng quan cửa hàng</h1></div></div><div class="admin-stats"><div><span>Sản phẩm</span><b>@Model.ProductCount</b></div><div><span>Biến thể</span><b>@Model.VariantCount</b></div><div><span>Banner</span><b>@Model.BannerCount</b></div><div><span>Banner đang chạy</span><b>@Model.ActiveBannerCount</b></div><div><span>Sắp hết hàng (&lt;5)</span><b>@Model.LowStockCount</b></div></div></div>

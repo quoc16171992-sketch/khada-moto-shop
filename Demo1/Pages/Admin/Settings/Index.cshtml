@@ -1,0 +1,4 @@
+@page
+@model Demo1.Pages.Admin.Settings.IndexModel
+@{ ViewData["Title"] = "Thông tin cửa hàng"; }
+<div class="container section-block admin-page"><partial name="_AdminNav" /><div class="admin-title"><h1>Thông tin cửa hàng</h1><a class="btn btn-racing" asp-page="Edit">Chỉnh sửa</a></div><div class="content-panel"><dl class="admin-details"><dt>Tên cửa hàng</dt><dd>@Model.Settings.ShopName</dd><dt>Số điện thoại</dt><dd>@(Model.Settings.PhoneNumber ?? "Chưa cấu hình")</dd><dt>Facebook</dt><dd>@(Model.Settings.FacebookUrl ?? "Chưa cấu hình")</dd><dt>Email</dt><dd>@(Model.Settings.Email ?? "Chưa cấu hình")</dd><dt>Địa chỉ</dt><dd>@(Model.Settings.Address ?? "Chưa cấu hình")</dd><dt>Giờ hỗ trợ</dt><dd>@(Model.Settings.SupportHours ?? "Chưa cấu hình")</dd><dt>Mô tả footer</dt><dd>@(Model.Settings.FooterDescription ?? "Chưa cấu hình")</dd></dl></div></div>

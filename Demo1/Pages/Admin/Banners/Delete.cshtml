@@ -1,0 +1,4 @@
+@page "{id:int}"
+@model Demo1.Pages.Admin.Banners.DeleteModel
+@{ ViewData["Title"] = "Xóa banner"; }
+<div class="container section-block admin-page"><partial name="_AdminNav" /><div class="delete-panel"><h1>Xóa banner?</h1><p>Bạn sắp xóa banner <b>@Model.Banner.Title</b> và ảnh upload liên quan.</p><form method="post"><button class="btn btn-danger" type="submit">Xác nhận xóa</button> <a class="btn btn-outline-secondary" asp-page="Index">Hủy</a></form></div></div>

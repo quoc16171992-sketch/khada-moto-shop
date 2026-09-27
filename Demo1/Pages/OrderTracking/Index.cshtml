@@ -1,0 +1,7 @@
+@page "/tra-cuu-don-hang"
+@model Demo1.Pages.OrderTracking.IndexModel
+@{ ViewData["Title"] = "Tra cứu đơn hàng"; }
+
+<div class="page-hero"><div class="container"><span class="eyebrow">THEO DÕI ĐƠN HÀNG</span><h1>Tra cứu đơn hàng</h1><p>Nhập đúng mã đơn và số điện thoại đã dùng khi đặt hàng.</p></div></div>
+<div class="container section-block"><div class="tracking-form mx-auto"><form method="post"><div asp-validation-summary="ModelOnly" class="text-danger"></div><div class="mb-3"><label asp-for="Input.OrderCode" class="form-label"></label><input asp-for="Input.OrderCode" class="form-control form-control-lg text-uppercase" placeholder="KS-20260801-A1B2C3" /><span asp-validation-for="Input.OrderCode" class="text-danger"></span></div><div class="mb-4"><label asp-for="Input.PhoneNumber" class="form-label"></label><input asp-for="Input.PhoneNumber" class="form-control form-control-lg" /><span asp-validation-for="Input.PhoneNumber" class="text-danger"></span></div><button class="btn btn-racing btn-lg w-100" type="submit">Tra cứu</button></form></div></div>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

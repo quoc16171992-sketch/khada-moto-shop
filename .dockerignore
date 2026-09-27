@@ -1,0 +1,10 @@
+**/bin/
+**/obj/
+.git/
+.vs/
+work/
+*.db
+*.db-shm
+*.db-wal
+Demo1/wwwroot/uploads/banners/*
+Demo1/wwwroot/uploads/products/*
