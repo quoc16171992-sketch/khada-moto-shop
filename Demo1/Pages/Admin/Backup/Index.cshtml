@@ -1,0 +1,39 @@
+@page
+@model Demo1.Pages.Admin.Backup.IndexModel
+@{ ViewData["Title"] = "Sao lưu & Khôi phục"; }
+<div class="container section-block admin-page"><partial name="_AdminNav" /><div class="admin-title"><h1>Sao lưu &amp; Khôi phục</h1></div>
+
+@if (!string.IsNullOrEmpty(Model.StatusMessage))
+{
+    <div class="alert alert-success">@Model.StatusMessage</div>
+}
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger">@Model.ErrorMessage</div>
+}
+
+<div class="content-panel mb-4">
+    <h2>Tình trạng dữ liệu hiện tại</h2>
+    <dl class="admin-details">
+        <dt>File database</dt>
+        <dd>@Model.DatabasePath</dd>
+        <dt>Dung lượng database</dt>
+        <dd>@((Model.DatabaseSizeBytes / 1024.0).ToString("N1")) KB</dd>
+        <dt>Ảnh uploads</dt>
+        <dd>@Model.UploadFileCount file trong @Model.UploadFolderCount thư mục — @((Model.UploadSizeBytes / 1024.0).ToString("N1")) KB</dd>
+    </dl>
+    <a class="btn btn-racing" asp-page-handler="Download">⬇ Tải file backup (.zip)</a>
+    <p class="text-muted small mt-2 mb-0">File zip chứa <code>khadashop.db</code> (snapshot sạch) + toàn bộ ảnh trong <code>uploads/</code>. Hãy tải về máy và giữ ở nơi an toàn trước khi thay đổi code/deploy.</p>
+</div>
+
+<div class="content-panel">
+    <h2>Khôi phục từ file backup</h2>
+    <p class="text-muted">Dùng khi sau khi deploy lại mà site bị mất sản phẩm/ảnh: tải file backup đã tải về trước đó lên, dữ liệu sẽ quay lại như lúc backup. <strong>Lưu ý:</strong> khôi phục sẽ ghi đè dữ liệu hiện tại trên máy chủ.</p>
+    <form method="post" enctype="multipart/form-data" asp-page-handler="Restore">
+        <div class="mb-3">
+            <input type="file" name="backupFile" accept=".zip" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Khôi phục sẽ GHI ĐÈ dữ liệu hiện tại trên máy chủ. Tiếp tục?');">Khôi phục ngay</button>
+    </form>
+</div>
+</div>
